@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f8fc" />
+    <title>Cap Révisions — Suivi de progression</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Navigation principale">
+        <a class="brand" href="#dashboard" data-nav="dashboard" aria-label="Cap Révisions, accueil">
+          <span class="brand-mark">C</span>
+          <span><strong>Cap</strong><em>Révisions</em></span>
+        </a>
+        <nav class="main-nav">
+          <a class="nav-link active" href="#dashboard" data-nav="dashboard"><span>◫</span> Tableau de bord</a>
+          <a class="nav-link" href="#courses" data-nav="courses"><span>▤</span> Mes cours</a>
+          <a class="nav-link" href="#subjects" data-nav="subjects"><span>◒</span> Mes matières</a>
+          <a class="nav-link" href="#history" data-nav="history"><span>◷</span> Historique</a>
+        </nav>
+        <div class="sidebar-bottom">
+          <button class="text-button" id="themeToggle" type="button"><span>◐</span> Mode sombre</button>
+          <button class="text-button" id="dataMenuButton" type="button"><span>⋯</span> Mes données</button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <button class="mobile-menu" id="mobileMenu" aria-label="Ouvrir le menu" type="button">☰</button>
+          <div class="page-heading">
+            <p class="eyebrow" id="pageEyebrow">VOTRE TRAJECTOIRE</p>
+            <h1 id="pageTitle">Bonjour !</h1>
+          </div>
+          <div class="top-actions">
+            <label class="period-control" title="Période d'analyse">
+              <span>◷</span>
+              <select id="periodFilter" aria-label="Période d'analyse">
+                <option value="all">Toutes les données</option>
+                <option value="today">Aujourd'hui</option>
+                <option value="7d">7 derniers jours</option>
+                <option value="30d">30 derniers jours</option>
+                <option value="3m">3 derniers mois</option>
+                <option value="year">Cette année</option>
+                <option value="custom">Personnalisé…</option>
+              </select>
+            </label>
+            <button class="primary-button" id="addSessionButton" type="button"><span>＋</span> Ajouter une session</button>
+          </div>
+        </header>
+
+        <div id="customPeriod" class="custom-period hidden" aria-live="polite">
+          <label>Du <input id="fromDate" type="date" /></label>
+          <label>au <input id="toDate" type="date" /></label>
+          <button class="small-button" id="applyCustomPeriod" type="button">Appliquer</button>
+        </div>
+
+        <section id="view" aria-live="polite"></section>
+      </main>
+    </div>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <dialog id="entryDialog" class="entry-dialog">
+      <form id="entryForm" method="dialog" novalidate>
+        <header class="dialog-header">
+          <div><p class="eyebrow" id="dialogEyebrow">NOUVELLE ENTRÉE</p><h2 id="dialogTitle">Ajouter une session</h2></div>
+          <button class="icon-button" value="cancel" aria-label="Fermer" type="submit">×</button>
+        </header>
+        <div id="dialogFields"></div>
+        <p class="form-error" id="formError" role="alert"></p>
+        <footer class="dialog-footer">
+          <button class="secondary-button" value="cancel" type="submit">Annuler</button>
+          <button class="primary-button" id="formSubmit" value="default" type="submit">Enregistrer</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <dialog id="confirmDialog" class="confirm-dialog">
+      <form method="dialog">
+        <div class="confirm-icon">!</div>
+        <h2 id="confirmTitle">Supprimer cette session ?</h2>
+        <p id="confirmText">Cette action est irréversible.</p>
+        <div class="dialog-footer centered">
+          <button class="secondary-button" value="cancel" type="submit">Annuler</button>
+          <button class="danger-button" id="confirmAction" value="confirm" type="submit">Supprimer</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status"></div>
+    <script src="models.js"></script>
+    <script src="storage.js"></script>
+    <script src="analytics.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
