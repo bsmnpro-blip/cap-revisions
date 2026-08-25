@@ -61,13 +61,15 @@ window.Revisions = window.Revisions || {};
     const progressedSubjects = workedSubjects.filter((stats) => stats.progress != null);
     const progressCourses = worked.filter((stats) => stats.totalProgress != null);
     const current = average(worked.map((stats) => stats.last));
+    const allScores = worked.flatMap((stats) => stats.scores);
+    const allScoresAverage = average(allScores);
     const progression = average(progressCourses.map((stats) => stats.totalProgress));
     const highestSubject = [...workedSubjects].sort((a, b) => b.current - a.current)[0] || null;
     const weakestSubject = [...workedSubjects].sort((a, b) => a.current - b.current)[0] || null;
     const mostImproved = [...progressedSubjects].sort((a, b) => b.progress - a.progress)[0] || null;
     const mostDeclined = [...progressedSubjects].sort((a, b) => a.progress - b.progress)[0] || null;
     return {
-      courses, subjects, worked, workedSubjects, current, progression,
+      courses, subjects, worked, workedSubjects, current, allScoresAverage, progression,
       courseCount: data.courses.length, subjectCount: data.subjects.length,
       sessionCount: data.sessions.filter((session) => inRange(session.date, range)).length,
       highestSubject, weakestSubject, mostImproved, mostDeclined,

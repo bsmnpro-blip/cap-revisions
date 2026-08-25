@@ -36,6 +36,8 @@ try {
 
   const global = R.analytics.globalStats(data);
   assert(global.progression === 2.5, 'La progression globale doit agréger les cours de façon équilibrée');
+  assert(global.current === 18, 'La moyenne de niveau doit prendre la dernière note de chaque cours');
+  assert(Math.abs(global.allScoresAverage - 14.9) < 0.0001, 'La moyenne de toutes les notes doit inclure toutes les sessions');
   document.querySelector('#result').textContent = '✓ Tous les tests de calcul sont passés.';
 } catch (error) {
   document.querySelector('#result').textContent = `✗ ${error.message}`;

@@ -101,7 +101,8 @@
     }).join('');
     view.innerHTML = `
       <section class="stat-grid" aria-label="Indicateurs globaux">
-        ${statCard('Moyenne globale actuelle', scoreOrPending(global.current), `Niveau moyen des derniers scores ${periodDescription()}`)}
+        ${statCard('Moyenne de niveau', scoreOrPending(global.current), `Dernière note de chaque cours ${periodDescription()}`)}
+        ${statCard('Moyenne de toutes les notes', scoreOrPending(global.allScoresAverage), `Toutes les sessions ${periodDescription()}`)}
         ${statCard('Progression globale', global.progression == null ? trendMarkup(global.trend) : deltaMarkup(global.progression), 'Moyenne des progressions par cours')}
         ${statCard('Cours suivis', formatNumber(global.courseCount, 0), `${global.worked.length} travaillé${global.worked.length > 1 ? 's' : ''} ${periodDescription()}`)}
         ${statCard('Sessions réalisées', formatNumber(global.sessionCount, 0), `Enregistrées ${periodDescription()}`)}
@@ -110,7 +111,7 @@
         <article class="panel"><header class="panel-header"><div><h2 class="panel-title">Évolution de votre niveau global</h2><p class="panel-subtitle">Moyenne des dernières performances connues par cours</p></div><span class="muted">/20</span></header><div class="panel-body">${lineChart(A.aggregateHistory(state.data, range), 'Évolution globale au fil du temps', 'global')}</div></article>
         <article class="panel"><header class="panel-header"><div><h2 class="panel-title">🎯 Cours à revoir</h2><p class="panel-subtitle">Priorité selon niveau, tendance, objectif et régularité</p></div><button class="link-button" data-go="courses" type="button">Tout voir</button></header><div class="panel-body"><div class="priority-list">${priorities.map((item, index) => `<div class="priority-row"><span class="priority-number">${index + 1}</span><div><button class="course-link" data-go-course="${esc(item.course.id)}" type="button">${esc(item.course.name)}</button><p class="row-meta">${esc(item.reason)}</p></div><div class="row-score">${item.stats.count ? formatScore(item.stats.last) : '—'}<small>${item.stats.totalProgress == null ? trendLabels[item.stats.trend] : formatDelta(item.stats.totalProgress)}</small></div></div>`).join('') || '<p class="muted">Ajoutez un cours pour voir les priorités.</p>'}</div></div></article>
       </section>
-      <div class="section-heading"><div><h2>Vos matières</h2><p>Chaque matière est agrégée au niveau de ses cours, jamais au volume de sessions.</p></div><button class="link-button" data-go="subjects" type="button">Voir toutes les matières</button></div>
+      <div class="section-heading"><div><h2>Vos matières</h2><p>La moyenne de niveau donne le niveau actuel ; la moyenne de toutes les notes reflète l’ensemble de vos sessions.</p></div><button class="link-button" data-go="subjects" type="button">Voir toutes les matières</button></div>
       <section class="subject-summary-grid">${subjectCards}</section>`;
   }
 

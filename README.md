@@ -18,7 +18,8 @@ Les données sont conservées dans le stockage local du navigateur (`localStorag
 - Pour un cours, les sessions sont classées par date, puis par instant de création lorsque deux sessions ont la même date.
 - La progression totale d’un cours est `dernière note - première note`. La dernière progression compare les deux dernières sessions de ce même cours.
 - Une matière calcule sa progression en moyennant les progressions de ses cours. Le nombre de sessions d’un cours ne lui donne donc pas plus de poids.
-- La moyenne actuelle d’une matière (et du niveau global) est la moyenne des dernières notes connues des cours concernés.
+- La moyenne de niveau d’une matière (et du niveau global) est la moyenne des dernières notes connues de chaque cours concerné.
+- La moyenne de toutes les notes est la moyenne de toutes les sessions enregistrées sur la période sélectionnée ; elle complète la moyenne de niveau sans la remplacer.
 - La courbe globale recalcule, à chaque session, la moyenne des dernières performances alors disponibles pour les cours déjà travaillés.
 
 Les filtres de période appliquent ces mêmes règles aux sessions comprises dans la période sélectionnée : ils répondent donc à la question « comment ai-je évolué pendant cette période ? ».
