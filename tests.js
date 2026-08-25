@@ -27,6 +27,13 @@ try {
   assert(gen.totalProgress === 4 && stats.totalProgress === 2, 'Les cours ne sont pas indépendants');
   const medicines = R.analytics.subjectStats(data, 'med');
   assert(Math.abs(medicines.progress - (8 / 3)) < 0.0001, 'La progression matière doit moyenner les progressions des cours');
+
+  const duplicateSubject = R.validateSubject({ id: 'new', name: ' Médicaments ' }, data.subjects, 'new');
+  assert(duplicateSubject, 'Les doublons de matière doivent être détectés');
+  const duplicateCourse = R.validateCourse({ id: 'new', subjectId: 'med', name: ' Génériques ', targetScore: null }, data.subjects, data.courses, 'new');
+  assert(duplicateCourse, 'Les doublons de cours dans une matière doivent être détectés');
+  assert(!R.validateCourse({ id: 'new', subjectId: 'droit', name: 'Génériques', targetScore: null }, data.subjects, data.courses, 'new'), 'Un cours identique dans une autre matière doit rester possible');
+
   const global = R.analytics.globalStats(data);
   assert(global.progression === 2.5, 'La progression globale doit agréger les cours de façon équilibrée');
   document.querySelector('#result').textContent = '✓ Tous les tests de calcul sont passés.';

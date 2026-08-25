@@ -24,10 +24,16 @@ window.Revisions = window.Revisions || {};
     comment: text(values.comment), createdAt: values.createdAt || new Date().toISOString()
   });
 
-  R.validateSubject = (subject) => subject.name ? '' : 'Indiquez le nom de la matière.';
-  R.validateCourse = (course, subjects) => {
+  R.validateSubject = (subject, subjects = [], currentId = null) => {
+    if (!subject.name) return 'Indiquez le nom de la matière.';
+    const duplicate = subjects.some((item) => item.id !== currentId && text(item.name).toLocaleLowerCase('fr') === subject.name.toLocaleLowerCase('fr'));
+    return duplicate ? 'Une matière portant ce nom existe déjà.' : '';
+  };
+  R.validateCourse = (course, subjects, courses = [], currentId = null) => {
     if (!course.subjectId || !subjects.some((subject) => subject.id === course.subjectId)) return 'Choisissez une matière existante.';
     if (!course.name) return 'Indiquez le nom du cours.';
+    const duplicate = courses.some((item) => item.id !== currentId && item.subjectId === course.subjectId && text(item.name).toLocaleLowerCase('fr') === course.name.toLocaleLowerCase('fr'));
+    if (duplicate) return 'Un cours portant ce nom existe déjà dans cette matière.';
     if (course.targetScore != null && (!Number.isFinite(course.targetScore) || course.targetScore < 0 || course.targetScore > 20)) return "L'objectif doit être compris entre 0 et 20.";
     return '';
   };
